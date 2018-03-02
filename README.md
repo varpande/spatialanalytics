@@ -1,5 +1,5 @@
 # Spatial Analytics
-Amazon related setup files can be found under the directory amazon
+Amazon related configuration files can be found under the directory amazon
 
 The experimental files for various systems can be found under their respective directories
 

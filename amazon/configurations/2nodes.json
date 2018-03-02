@@ -1,0 +1,35 @@
+[
+  {
+    "classification": "yarn-site",
+    "properties": {
+      "mapreduce.map.memory.mb": "7552",
+      "yarn.nodemanager.resource.memory-mb": "241664",
+      "mapreduce.reduce.memory.mb": "15104",
+      "mapreduce.map.java.opts": "-Xmx6042m",
+      "yarn.scheduler.maximum-allocation-mb": "241664",
+      "yarn.scheduler.minimum-allocation-mb": "32",
+      "yarn.nodemanager.vmem-check-enabled": "false",
+      "mapreduce.reduce.java.opts": "-Xmx12084m",
+      "yarn.app.mapreduce.am.resource.mb": "7552"
+    },
+    "configurations": [
+      
+    ]
+  },
+  {
+    "classification": "spark-defaults",
+    "properties": {
+      "spark.local.dir": "/mnt/tmp",
+      "spark.executor.instances": "12",
+      "spark.executor.memory": "37G",
+      "spark.driver.memory": "37G",
+      "spark.driver.cores": "5",
+      "spark.executor.cores": "5",
+      "spark.driver.maxResultSize": "35G",
+      "spark.kryo.referenceTracking": "false"
+    },
+    "configurations": [
+      
+    ]
+  }
+]
