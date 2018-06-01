@@ -91,22 +91,9 @@ object SpatialJoins {
 
       }
 
-      val rightRDD = rightrdd match {
-
-        case "point" => new PointRDD(sc, points, FileDataSplitter.CSV, false, numPartitions, StorageLevel.MEMORY_ONLY)
-        case "linestring" => new LineStringRDD(sc, linestrings, FileDataSplitter.WKT, false, numPartitions, StorageLevel.MEMORY_ONLY)
-        case "rectangle" => new RectangleRDD(sc, rectangles, FileDataSplitter.WKT, false, numPartitions, StorageLevel.MEMORY_ONLY)
-        case "polygon" => new PolygonRDD(sc, polygons, FileDataSplitter.WKT, false, numPartitions, StorageLevel.MEMORY_ONLY)
-
-      }
-      t1 = System.nanoTime()
-
-      val read_time = (t1 - t0) / 1E9
-      println("Read Time: " + read_time + " sec")
-
       leftRDD.spatialPartitioning(partitioningScheme)
 
-      leftRDD.buildIndex(idx, true)
+      leftRDD.buildIndex(idx,true)
 
       leftRDD.indexedRDD.persist(StorageLevel.MEMORY_ONLY)
 
@@ -117,11 +104,17 @@ object SpatialJoins {
       val c2 = leftRDD.indexedRDD.count()
 
       leftRDD.rawSpatialRDD.unpersist()
-      t1 = System.nanoTime()
-      val leftPTime = (t1 - t0) / 1E9
-      println("Left Partitioning and Indexing Time: " + leftPTime + " sec")
 
-      t0 = System.nanoTime()
+      leftRDD.spatialPartitionedRDD.unpersist()
+
+      val rightRDD = rightrdd match {
+
+        case "point" => new PointRDD(sc, points, FileDataSplitter.CSV, false, numPartitions, StorageLevel.MEMORY_ONLY)
+        case "linestring" => new LineStringRDD(sc, linestrings, FileDataSplitter.WKT, false, numPartitions, StorageLevel.MEMORY_ONLY)
+        case "rectangle" => new RectangleRDD(sc, rectangles, FileDataSplitter.WKT, false, numPartitions, StorageLevel.MEMORY_ONLY)
+        case "polygon" => new PolygonRDD(sc, polygons, FileDataSplitter.WKT, false, numPartitions, StorageLevel.MEMORY_ONLY)
+
+      }
 
       rightRDD.spatialPartitioning(leftRDD.getPartitioner)
 
@@ -130,8 +123,10 @@ object SpatialJoins {
       val c3 = rightRDD.spatialPartitionedRDD.count()
 
       t1 = System.nanoTime()
-      val rightPTime = (t1 - t0) / 1E9
-      println("Right Partitioning Time: " + rightPTime + " sec")
+
+      val rpTime = (t1 - t0)/1E9
+
+      println("Total Reading and Partitioning Time: " + rpTime + " sec")
 
       rightRDD.rawSpatialRDD.unpersist()
 

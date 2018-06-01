@@ -83,6 +83,7 @@ object SpatialJoins {
       println("Indexing Time: " + (runtime) / 1E3 + " sec ")
 
       t0 = System.nanoTime()
+      // This is only a filter based on Z-curve value
       count = indexedBuildings.join(indexedRoads, indexedRoads("curve") === indexedBuildings("curve")).where((indexedBuildings("relation") === "Intersects")).count()
       t1 = System.nanoTime()
       val time0 = ((t1 - t0) / 1E9)
@@ -134,7 +135,8 @@ object SpatialJoins {
       println("Indexing Time: " + (runtime) / 1E3 + " sec ")
 
       t0 = System.nanoTime()
-      count = indexedBuildings.join(indexedRoads, indexedRoads("curve") === indexedBuildings("curve")).where((indexedBuildings("relation") === "Intersects")).count()
+      // indexedRoads("point") intersects indexedBuildings("point") -> this enforces exact check
+      count = indexedRoads.join(indexedBuildings, indexedBuildings("curve") === indexedRoads("curve")).where((indexedRoads("relation") === "Intersects") or (indexedRoads("point") intersects indexedBuildings("point"))).count()
       t1 = System.nanoTime()
       val time0 = ((t1 - t0) / 1E9)
       println("Join Time: " + time0 + " sec")
@@ -182,7 +184,8 @@ object SpatialJoins {
       println("Indexing Time: " + (runtime) / 1E3 + " sec ")
 
       t0 = System.nanoTime()
-      count = indexedBuildings.join(indexedRoads, indexedRoads("curve") === indexedBuildings("curve")).where((indexedBuildings("relation") === "Intersects")).count()
+      // $"point" intersects $"polygon" enforces exact check
+      count = indexedRoads.join(indexedBuildings, indexedBuildings("curve") === indexedRoads("curve")).where((indexedRoads("relation") === "Intersects") or ($"point" intersects $"polygon")).count()
       t1 = System.nanoTime()
       val time0 = ((t1 - t0) / 1E9)
       println("Join Time: " + time0 + " sec")
@@ -230,7 +233,7 @@ object SpatialJoins {
       println("Indexing Time: " + (runtime) / 1E3 + " sec ")
 
       t0 = System.nanoTime()
-      count = indexedBuildings.join(indexedRoads, indexedRoads("curve") === indexedBuildings("curve")).where((indexedBuildings("relation") === "Intersects")).count()
+      count = indexedRoads.join(indexedBuildings, indexedBuildings("curve") === indexedRoads("curve")).where((indexedRoads("relation") === "Intersects") or ($"point" intersects $"polygon")).count()
       t1 = System.nanoTime()
       val time0 = ((t1 - t0) / 1E9)
       println("Join Time: " + time0 + " sec")
@@ -274,7 +277,8 @@ object SpatialJoins {
       println("Indexing Time: " + (runtime) / 1E3 + " sec ")
 
       t0 = System.nanoTime()
-      count = indexedBuildings.join(indexedRoads, indexedRoads("curve") === indexedBuildings("curve")).where((indexedBuildings("relation") === "Intersects")).count()
+      // This is only a filter based on Z-curve value, also intersects predicate has not been implemented for LineString-LineString yet
+      count = indexedBuildings.join(indexedRoads, indexedRoads("curve") === indexedBuildings("curve")).where((indexedBuildings("relation") === "Contains")).count()
       t1 = System.nanoTime()
       val time0 = ((t1 - t0) / 1E9)
       println("Join Time: " + time0 + " sec")
@@ -318,7 +322,7 @@ object SpatialJoins {
       println("Indexing Time: " + (runtime) / 1E3 + " sec ")
 
       t0 = System.nanoTime()
-      count = indexedBuildings.join(indexedRoads, indexedRoads("curve") === indexedBuildings("curve")).where((indexedBuildings("relation") === "Intersects")).count()
+      count = indexedRoads.join(indexedBuildings, indexedBuildings("curve") === indexedRoads("curve")).where((indexedRoads("relation") === "Intersects") or ($"polyline" intersects $"polygon")).count()
       t1 = System.nanoTime()
       val time0 = ((t1 - t0) / 1E9)
       println("Join Time: " + time0 + " sec")
@@ -362,7 +366,7 @@ object SpatialJoins {
       println("Indexing Time: " + (runtime) / 1E3 + " sec ")
 
       t0 = System.nanoTime()
-      count = indexedBuildings.join(indexedRoads, indexedRoads("curve") === indexedBuildings("curve")).where((indexedBuildings("relation") === "Intersects")).count()
+      count = indexedRoads.join(indexedBuildings, indexedBuildings("curve") === indexedRoads("curve")).where((indexedRoads("relation") === "Intersects") or ($"polyline" intersects $"polygon")).count()
       t1 = System.nanoTime()
       val time0 = ((t1 - t0) / 1E9)
       println("Join Time: " + time0 + " sec")
@@ -406,7 +410,7 @@ object SpatialJoins {
       println("Indexing Time: " + (runtime) / 1E3 + " sec ")
 
       t0 = System.nanoTime()
-      count = indexedBuildings.join(indexedRoads, indexedRoads("curve") === indexedBuildings("curve")).where((indexedBuildings("relation") === "Intersects")).count()
+      count = indexedRoads.join(indexedBuildings, indexedBuildings("curve") === indexedRoads("curve")).where((indexedRoads("relation") === "Intersects") or (indexedRoads("polygon") intersects indexedBuildings("polygon"))).count()
       t1 = System.nanoTime()
       val time0 = ((t1 - t0) / 1E9)
       println("Join Time: " + time0 + " sec")
@@ -450,7 +454,7 @@ object SpatialJoins {
       println("Indexing Time: " + (runtime) / 1E3 + " sec ")
 
       t0 = System.nanoTime()
-      count = indexedBuildings.join(indexedRoads, indexedRoads("curve") === indexedBuildings("curve")).where((indexedBuildings("relation") === "Intersects")).count()
+      count = indexedRoads.join(indexedBuildings, indexedBuildings("curve") === indexedRoads("curve")).where((indexedRoads("relation") === "Intersects") or (indexedRoads("polygon") intersects indexedBuildings("polygon"))).count()
       t1 = System.nanoTime()
       val time0 = ((t1 - t0) / 1E9)
       println("Join Time: " + time0 + " sec")
@@ -494,7 +498,7 @@ object SpatialJoins {
       println("Indexing Time: " + (runtime) / 1E3 + " sec ")
 
       t0 = System.nanoTime()
-      count = indexedBuildings.join(indexedRoads, indexedRoads("curve") === indexedBuildings("curve")).where((indexedBuildings("relation") === "Intersects")).count()
+      count = indexedRoads.join(indexedBuildings, indexedBuildings("curve") === indexedRoads("curve")).where((indexedRoads("relation") === "Intersects") or (indexedRoads("polygon") intersects indexedBuildings("polygon"))).count()
       t1 = System.nanoTime()
       val time0 = ((t1 - t0) / 1E9)
 

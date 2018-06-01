@@ -47,7 +47,7 @@ object RangeQueries {
     println("Range1: 0.00001 %")
     t0 = System.nanoTime()
     for (i <- 1 to nQueries) {
-      var count1 = leftLocationRDD.rangeFilterNew(rangeQueryWindow1, (id) => true)
+      var count1 = leftLocationRDD.rangeFilter(rangeQueryWindow1, (id) => true)
     }
     t1 = System.nanoTime()
     println("Total Time: " + ((t1 - t0) / 1E9) + " sec")
@@ -56,7 +56,7 @@ object RangeQueries {
     println("Range2: 0.001 %")
     t0 = System.nanoTime()
     for (i <- 1 to nQueries) {
-      var count1 = leftLocationRDD.rangeFilterNew(rangeQueryWindow2, (id) => true)
+      var count1 = leftLocationRDD.rangeFilter(rangeQueryWindow2, (id) => true)
     }
     t1 = System.nanoTime()
     println("Total Time: " + ((t1 - t0) / 1E9) + " sec")
@@ -65,7 +65,7 @@ object RangeQueries {
     println("Range3: 1.0 %")
     t0 = System.nanoTime()
     for (i <- 1 to nQueries) {
-      var count1 = leftLocationRDD.rangeFilterNew(rangeQueryWindow3, (id) => true)
+      var count1 = leftLocationRDD.rangeFilter(rangeQueryWindow3, (id) => true)
     }
     t1 = System.nanoTime()
     println("Total Time: " + ((t1 - t0) / 1E9) + " sec")
@@ -74,7 +74,7 @@ object RangeQueries {
     println("Range4: 10.0 %")
     t0 = System.nanoTime()
     for (i <- 1 to nQueries) {
-      var count1 = leftLocationRDD.rangeFilterNew(rangeQueryWindow4, (id) => true)
+      var count1 = leftLocationRDD.rangeFilter(rangeQueryWindow4, (id) => true)
     }
     t1 = System.nanoTime()
     println("Total Time: " + ((t1 - t0) / 1E9) + " sec")
@@ -83,7 +83,7 @@ object RangeQueries {
     println("Range5: 50.0 %")
     t0 = System.nanoTime()
     for (i <- 1 to nQueries) {
-      var count1 = leftLocationRDD.rangeFilterNew(rangeQueryWindow5, (id) => true)
+      var count1 = leftLocationRDD.rangeFilter(rangeQueryWindow5, (id) => true)
     }
     t1 = System.nanoTime()
     println("Total Time: " + ((t1 - t0) / 1E9) + " sec")
@@ -92,7 +92,7 @@ object RangeQueries {
     println("Range6: 100.0 %")
     t0 = System.nanoTime()
     for (i <- 1 to nQueries) {
-      var count1 = leftLocationRDD.rangeFilterNew(rangeQueryWindow6, (id) => true)
+      var count1 = leftLocationRDD.rangeFilter(rangeQueryWindow6, (id) => true)
     }
     t1 = System.nanoTime()
     println("Total Time: " + ((t1 - t0) / 1E9) + " sec")
